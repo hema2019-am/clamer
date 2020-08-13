@@ -60,12 +60,15 @@ class _TextingState extends State<Texting> {
         elevation: 0,
         leading: BackButton(
           color: Colors.black,
+          onPressed: (){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Tab()));
+          },
         ),
         title: Text("Minding"
         , style: TextStyle(
               color: Colors.blue[500],
               fontSize: 25,
-              fontStyle: FontStyle.italic
+              fontStyle: FontStyle.italic 
           ),),
       ),
       body: Column(
