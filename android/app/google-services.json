@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "643100932118",
+    "firebase_url": "https://clamer-41e56.firebaseio.com",
+    "project_id": "clamer-41e56",
+    "storage_bucket": "clamer-41e56.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643100932118:android:6a992498870830d10d5d37",
+        "android_client_info": {
+          "package_name": "com.example.clamer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643100932118-rmirc2rraanqg9s4qbfhsna1b9j7q7eh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc50wyF6Xf7679MbHrL5oXVy8c0Sk_IAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643100932118-rmirc2rraanqg9s4qbfhsna1b9j7q7eh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
