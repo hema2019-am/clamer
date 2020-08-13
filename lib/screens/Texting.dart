@@ -68,7 +68,7 @@ class _TextingState extends State<Texting> {
         , style: TextStyle(
               color: Colors.blue[500],
               fontSize: 25,
-              fontStyle: FontStyle.italic 
+              fontStyle: FontStyle.italic
           ),),
       ),
       body: Column(

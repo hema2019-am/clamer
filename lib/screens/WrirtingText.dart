@@ -98,7 +98,7 @@ class _WritingTextState extends State<WritingText> {
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
+                            backgroundColor: Colors.cyan[500],
                             textColor: Colors.white);
 
                         Navigator.pushReplacement(
