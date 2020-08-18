@@ -3,9 +3,6 @@ import 'package:clamer/screens/Tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:clamer/screens/Home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:clamer/screens/read_book.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:clamer/screens/Music.dart';
 import 'package:clamer/screens/Texting.dart';
 
 import 'screens/MusicAlways.dart';
@@ -69,7 +66,7 @@ class MyBackground extends StatelessWidget {
 
 navigateToPage(context,String pageName ) async{
   switch(pageName){
-    case 'ReadBook' :  Navigator.push(context, MaterialPageRoute(builder:(context) => Tabs()));
+    case 'ReadBook' :  Navigator.push(context, MaterialPageRoute(builder:(context) => tabs()));
     break;
     case 'Music' : Navigator.push(context, MaterialPageRoute(builder: (context) => MusicAlways()));
     break;

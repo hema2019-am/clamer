@@ -25,8 +25,8 @@ class _MusicAlwaysState extends State<MusicAlways> {
               fontStyle: FontStyle.italic
           ),),
           bottom: TabBar( labelColor: Colors.black,tabs: [
-            Tab(text: "Downloaded Music", ),
-            Tab(text: "to be downloaded",)
+            Tab(text: "Offline Music", ),
+            Tab(text: "to be listenined",)
           ]),
         ),
         body: TabBarView(

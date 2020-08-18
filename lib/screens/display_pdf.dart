@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:async';
 
 
-import 'package:connectivity/connectivity.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
@@ -161,6 +161,7 @@ class _display_pdfState extends State<display_pdf> {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.blueAccent[400],
                           textColor: Colors.white);
+
                       Timer(Duration(seconds: 5), () {
                         Navigator.push(
                             context,
@@ -169,7 +170,7 @@ class _display_pdfState extends State<display_pdf> {
                                     PDFScreen(
                                       title: widget.fileName,
                                       pdfPath: pdfAtDisk,
-                                    )));
+                                    ),));
                         print("this");
                       });
                     } else {

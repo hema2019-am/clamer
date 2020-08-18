@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
+
 
 import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
+
 import 'package:path_provider/path_provider.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
@@ -69,8 +69,11 @@ class _display_musicState extends State<display_music> {
         musicAtDisk = f.path;
         audioPlayer.play(musicAtDisk);
         setState(() {
+
           playerState = PlayerState.playing;
+          print("this wrorks");
         });
+
         print(musicAtDisk);
       });
     }
@@ -134,9 +137,8 @@ class _display_musicState extends State<display_music> {
       File file = File("${dir.path}/${widget.music_name}.mp3");
 
       File urlFile = await file.writeAsBytes(bytes);
-      audioPlayer.play(musicAtDisk);
+      print("getUrl");
       setState(() {
-        playerState = PlayerState.playing;
 
       });
       return urlFile;
@@ -185,9 +187,10 @@ class _display_musicState extends State<display_music> {
 
    }else{
 
+
      if(_isInternet) {
        Fluttertoast.showToast(
-           msg: "please wait to download and play music",
+           msg: "please wait for 5sc to download and play music",
            toastLength: Toast.LENGTH_SHORT,
            gravity: ToastGravity.BOTTOM,
            timeInSecForIosWeb: 1,
@@ -195,12 +198,11 @@ class _display_musicState extends State<display_music> {
            textColor: Colors.white
        );
 
-       audioPlayer.play(musicAtDisk);
+      await audioPlayer.play(musicAtDisk);
 
 
-       setState(() {
-         playerState = PlayerState.playing;
-       });
+
+
      }else{
        showDialog(context: context, builder: (context) =>
            AlertDialog(title: Text("No Internet"),

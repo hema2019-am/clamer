@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:clamer/screens/display_pdf.dart';
 import 'package:clamer/screens/downloadedPdf.dart';
 import 'package:clamer/screens/read_book.dart';
 
-class Tabs extends StatefulWidget {
+class tabs extends StatefulWidget {
   @override
-  _TabsState createState() => _TabsState();
+  _tabsState createState() => _tabsState();
 }
 
-class _TabsState extends State<Tabs> {
+class _tabsState extends State<tabs> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -20,20 +19,20 @@ class _TabsState extends State<Tabs> {
           ),
           backgroundColor: Colors.blue[100],
           elevation: 0,
-          title: Text("Books To Read",  style: TextStyle(
+          title: Text("Books to read",  style: TextStyle(
               color: Colors.blue[500],
               fontSize: 25,
               fontStyle: FontStyle.italic
           ),),
           bottom: TabBar( labelColor: Colors.black,tabs: [
-            Tab(text: "Downloaded book", ),
-            Tab(text: "to be downloaded",)
+            Tab(text: "Offline Book", ),
+            Tab(text: "to be read",)
           ]),
         ),
         body: TabBarView(
             children: [
               DownloadedPDF(),
-              ReadBook(),
+             ReadBook(),
             ]
         ),
       ),

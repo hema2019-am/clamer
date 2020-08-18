@@ -1,12 +1,13 @@
 import 'dart:io';
 
 import 'package:clamer/screens/Home.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:path_provider/path_provider.dart';
 
 import 'package:clamer/screens/WrirtingText.dart';
-import 'package:flutter/foundation.dart';
+
 
 class Texting extends StatefulWidget {
   @override
@@ -61,8 +62,9 @@ class _TextingState extends State<Texting> {
         leading: BackButton(
           color: Colors.black,
           onPressed: (){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Tab()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
           },
+
         ),
         title: Text("Minding"
         , style: TextStyle(
