@@ -1,12 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:clamer/back.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:connectivity/connectivity.dart';
-
-
-
 
 class Home extends StatefulWidget {
   @override
@@ -14,51 +12,38 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  bool _tryAgain = false;
-
   Map<PermissionGroup, PermissionStatus> permissions;
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     getPermission();
 
-
-
-  _checkWifi();
+    checkInternet();
   }
 
-
-  @override
-
-  void _checkWifi() async {
-    // the method below returns a Future
-    var connectivityResult = await (new Connectivity().checkConnectivity());
-    bool connectedToInternet = (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi);
-
-    if (!connectedToInternet) {
+  checkInternet() async {
+    try {
+      final response = await InternetAddress.lookup("example.com");
+      if (response.isNotEmpty && response[0].rawAddress.isNotEmpty) {
+        setState(() {});
+      }
+    } on SocketException catch (_) {
       _showAlert(context);
-
-    }
-    if (_tryAgain != !connectedToInternet) {
-      setState(() => _tryAgain = !connectedToInternet);
-
+      setState(() {});
     }
   }
-
-
 
   void getPermission() async {
     permissions = await PermissionHandler().requestPermissions([
 
       PermissionGroup.storage,
-
     ]);
   }
 
   @override
   Widget build(BuildContext context) {
-  return  Scaffold(
+    return Scaffold(
         backgroundColor: Colors.blueAccent[100],
         appBar: AppBar(
           backgroundColor: Colors.blue[100],
@@ -66,12 +51,10 @@ class _HomeState extends State<Home> {
           title: Text(
             'Calmer',
             style: TextStyle(
-              color: Colors.blue[500],
-              fontSize: 25,
-              fontStyle: FontStyle.italic
-            ),
+                color: Colors.blue[500],
+                fontSize: 25,
+                fontStyle: FontStyle.italic),
           ),
-
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -83,50 +66,55 @@ class _HomeState extends State<Home> {
                     width: double.infinity,
                     child: Carousel(
                       images: [
-                       SvgPicture.asset("assets/boy_wrirting.svg"),
-                       SvgPicture.asset('assets/man_music.svg'),
+                        SvgPicture.asset("assets/boy_wrirting.svg"),
+                        SvgPicture.asset('assets/man_music.svg'),
                         SvgPicture.asset('assets/girl_raeding.svg'),
                       ],
                       dotColor: Colors.blue,
                     ),
                   ),
-
                   Container(
                     child: Column(
-
                       children: <Widget>[
-                        SizedBox(height: 10,),
-                        MyBackground(image: 'assets/book.svg', pageName: 'ReadBook',),
-                        MyBackground(image: 'assets/headphone.svg', pageName: 'Music',),
-                        MyBackground(image: 'assets/scribble_thumb.svg', pageName: 'Texting',)
-
+                        SizedBox(
+                          height: 10,
+                        ),
+                        MyBackground(
+                          image: 'assets/book.svg',
+                          pageName: 'ReadBook',
+                        ),
+                        MyBackground(
+                          image: 'assets/headphone.svg',
+                          pageName: 'Music',
+                        ),
+                        MyBackground(
+                          image: 'assets/scribble_thumb.svg',
+                          pageName: 'Texting',
+                        )
                       ],
                     ),
                   )
                 ],
               ),
             ),
-
           ),
-        )
-    );
+        ));
   }
+
   _showAlert(BuildContext context) => showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("No Internet"),
-        content: Text("Please Connect to internet"),
-        actions: [
-          FlatButton(
-              child: Text("close"),
-              onPressed: () {
-                Navigator.pop(context);
-              }
-          )
-        ],
-
-      )
-  );
+            title: Text("No Internet"),
+            content: Text(
+                "Please Connect to internet, if you have now downloaded any book or music\nBut, downloaded so enjoy"),
+            actions: [
+              FlatButton(
+                  child: Text("close"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  })
+            ],
+          ));
 }
 
 class MyClipper extends CustomClipper<Path> {

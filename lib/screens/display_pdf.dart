@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:async';
 
-
-
 import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,8 +9,8 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:http/http.dart' as http;
 
-
 import 'package:clamer/screens/PDFScreen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class display_pdf extends StatefulWidget {
   final String file;
@@ -30,13 +28,13 @@ class display_pdf extends StatefulWidget {
 class _display_pdfState extends State<display_pdf> {
   String pdfAtDisk = "";
   String pdfAtStorage = "";
-  bool filePresent = false;
+
   List<FileSystemEntity> _files;
   List<FileSystemEntity> _textFiles = [];
   bool _isInternet = true;
 
-
   var files;
+  Map<PermissionGroup, PermissionStatus> permissions;
 
   @override
   void initState() {
@@ -44,13 +42,20 @@ class _display_pdfState extends State<display_pdf> {
     checkInternet();
 
     getFileFromUrl(widget.file).then((f) {
-
-        pdfAtDisk = f.path;
-        print(pdfAtDisk);
-
+      pdfAtDisk = f.path;
+      print(pdfAtDisk);
     });
 
     getFromDirectory();
+    getPermission();
+  }
+
+
+  void getPermission() async {
+    permissions = await PermissionHandler().requestPermissions([
+
+      PermissionGroup.storage,
+    ]);
   }
 
   void getFromDirectory() async {
@@ -64,17 +69,17 @@ class _display_pdfState extends State<display_pdf> {
         String path = entity.path;
         if (path.endsWith("${widget.fileName}.pdf")) {
           _textFiles.add(entity);
-          filePresent = true;
+
         }
       }
-
-
     } catch (e) {
       print(e);
     }
   }
 
-  Future<File> getFileFromUrl(String url,) async {
+  Future<File> getFileFromUrl(
+    String url,
+  ) async {
     try {
       var data = await http.get(url);
       var bytes = data.bodyBytes;
@@ -86,7 +91,6 @@ class _display_pdfState extends State<display_pdf> {
     } catch (e) {
       throw Exception("Error opening url file");
     }
-
   }
 
   checkInternet() async {
@@ -94,18 +98,13 @@ class _display_pdfState extends State<display_pdf> {
       final response = await InternetAddress.lookup("example.com");
       if (response.isNotEmpty && response[0].rawAddress.isNotEmpty) {
         _isInternet = true;
-        setState(() {
-
-        });
+        setState(() {});
       }
     } on SocketException catch (_) {
       _isInternet = false;
-      setState(() {
-
-      });
+      setState(() {});
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -142,12 +141,11 @@ class _display_pdfState extends State<display_pdf> {
               color: Colors.blue[500],
               onPressed: () {
                 setState(() {
-                  if (filePresent == true) {
+                  if (_textFiles.length > 0) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                PDFScreen(
+                            builder: (context) => PDFScreen(
                                   title: widget.fileName,
                                   pdfPath: _textFiles[0].path,
                                 )));
@@ -166,25 +164,27 @@ class _display_pdfState extends State<display_pdf> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    PDFScreen(
-                                      title: widget.fileName,
-                                      pdfPath: pdfAtDisk,
-                                    ),));
+                              builder: (context) => PDFScreen(
+                                title: widget.fileName,
+                                pdfPath: pdfAtDisk,
+                              ),
+                            ));
                         print("this");
                       });
                     } else {
-                      showDialog(context: context, builder: (context) =>
-                          AlertDialog(title: Text("No Internet"),
-                            content: Text("Connect to intenet"),
-                            actions: [
-                              FlatButton(
-                                  child: Text("Retry"),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  }
-                              )
-                            ],));
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: Text("No Internet"),
+                                content: Text("Connect to intenet"),
+                                actions: [
+                                  FlatButton(
+                                      child: Text("Retry"),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      })
+                                ],
+                              ));
                       setState(() {
                         checkInternet();
                       });
@@ -194,17 +194,15 @@ class _display_pdfState extends State<display_pdf> {
               },
               child: _textFiles.length != 0
                   ? Text(
-                "Open Book",
-                style: TextStyle(fontSize: 20),
-              )
+                      "Open Book",
+                      style: TextStyle(fontSize: 20),
+                    )
                   : Text(
-                "Download Book",
-                style: TextStyle(fontSize: 20),
-              ),
+                      "Download Book",
+                      style: TextStyle(fontSize: 20),
+                    ),
             ),
           ],
         ));
   }
-
-
 }

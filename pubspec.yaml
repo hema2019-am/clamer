@@ -41,7 +41,7 @@ dependencies:
   #Open PDF in a viewer
   flutter_pdfview: ^1.0.3+1
   path_provider: ^1.6.11
-  connectivity: ^0.4.2
+
   fluttertoast: ^7.0.1+1
   audioplayer: 0.8.1
 
